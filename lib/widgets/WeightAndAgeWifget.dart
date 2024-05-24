@@ -7,10 +7,14 @@ class WeightAndAgeButtonWidget extends StatelessWidget {
     super.key,
     required this.text,
     required this.santext,
+    required this.onPressedRemove,
+    this.onPressedAdd,
   });
 
   final String text;
   final int santext;
+  final void Function()? onPressedRemove;
+  final void Function()? onPressedAdd;
 
   @override
   Widget build(BuildContext context) {
@@ -30,13 +34,14 @@ class WeightAndAgeButtonWidget extends StatelessWidget {
               ),
               Text(
                 santext.toString(),
-                style: TextStyle(fontSize: 34, fontWeight: FontWeight.bold),
+                style:
+                    const TextStyle(fontSize: 34, fontWeight: FontWeight.bold),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: onPressedRemove, // () {},
                     style: ElevatedButton.styleFrom(
                         padding: EdgeInsets.zero, shape: const CircleBorder()),
                     child: const Padding(
@@ -49,7 +54,7 @@ class WeightAndAgeButtonWidget extends StatelessWidget {
                   ),
                   const SizedBox(width: 10),
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: onPressedAdd,
                     style: ElevatedButton.styleFrom(
                         padding: EdgeInsets.zero, shape: const CircleBorder()),
                     child: const Padding(

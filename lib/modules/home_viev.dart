@@ -1,18 +1,24 @@
-// ignore_for_file: library_private_types_in_public_api
+// import 'package:flutter/cupertino.dart';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_application_2/widgets/MaleAndFemaleButtonWidget.dart';
 import 'package:flutter_application_2/widgets/WeightAndAgeWifget.dart';
 
-class HomeView extends StatefulWidget {
-  const HomeView({super.key});
+class HomeViev extends StatefulWidget {
+  const HomeViev({super.key});
 
   @override
-  _HomeViewState createState() => _HomeViewState();
+  // ignore: library_private_types_in_public_api
+  _HomeVievState createState() => _HomeVievState();
 }
 
-class _HomeViewState extends State<HomeView> {
-  double _currentSliderValue = 50;
+class _HomeVievState extends State<HomeViev> {
+  double height = 60;
+
+  bool isSelect = false;
+  int weightSan = 60;
+  int ageSan = 18;
 
   @override
   Widget build(BuildContext context) {
@@ -26,25 +32,44 @@ class _HomeViewState extends State<HomeView> {
       ),
       body: Column(
         children: [
-          const Padding(
-            padding: EdgeInsets.all(8.0),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
             child: Row(
-              children: <Widget>[
+              children: [
                 Expanded(
-                  child: MaleAndFemaleButtonWidget(
-                    icon: Icons.male,
-                    text: 'Male',
+                  child: InkWell(
+                    onTap: () {
+                      setState(() {});
+                      isSelect = true;
+                    },
+                    child: MaleAndFemaleButtonWidget(
+                      icon: Icons.male,
+                      text: 'Бала',
+                      color: isSelect
+                          ? Colors.red
+                          : const Color.fromARGB(255, 62, 151, 196),
+                    ),
                   ),
                 ),
                 Expanded(
-                  child: MaleAndFemaleButtonWidget(
-                    icon: Icons.female,
-                    text: 'Female',
+                  child: InkWell(
+                    onTap: () {
+                      setState(() {
+                        isSelect = false;
+                      });
+                    },
+                    child: MaleAndFemaleButtonWidget(
+                        icon: Icons.female,
+                        text: 'Кыз',
+                        color: isSelect
+                            ? const Color.fromARGB(255, 62, 151, 196)
+                            : Colors.red),
                   ),
                 ),
               ],
             ),
           ),
+          const SizedBox(height: 15),
           SizedBox(
             width: double.infinity,
             height: 200,
@@ -56,35 +81,35 @@ class _HomeViewState extends State<HomeView> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     const Text(
-                      'HEIGHT',
+                      'Бойунун узундугу',
                       style: TextStyle(
-                        fontSize: 20,
-                        color: Colors.white,
+                        fontSize: 35,
+                        color: Colors.white70,
                       ),
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          _currentSliderValue.truncate().toString(),
+                          height.truncate().toString(),
                           style: const TextStyle(
-                            fontSize: 42,
+                            fontSize: 50,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        const Text('cm'),
+                        const Text('сантиметр'),
                       ],
                     ),
                     Slider(
-                      value: _currentSliderValue,
-                      min: 50,
+                      value: height,
+                      min: 0,
                       max: 220,
                       divisions: 100,
                       activeColor: Colors.red,
-                      label: _currentSliderValue.round().toString(),
+                      label: height.round().toString(),
                       onChanged: (double value) {
                         setState(() {
-                          _currentSliderValue = value;
+                          height = value;
                         });
                       },
                     ),
@@ -94,40 +119,159 @@ class _HomeViewState extends State<HomeView> {
             ),
           ),
           const SizedBox(height: 15),
-          const Row(
+          Row(
             children: [
               Expanded(
-                  child: WeightAndAgeButtonWidget(
-                text: 'Wight',
-                santext: 60,
-              )),
+                child: WeightAndAgeButtonWidget(
+                  text: 'Салмагы',
+                  santext: weightSan,
+                  onPressedRemove: () {
+                    setState(() {});
+                    weightSan--;
+                  },
+                  onPressedAdd: () {
+                    setState(() {});
+                    weightSan++;
+                  },
+                ),
+              ),
               Expanded(
-                  child: WeightAndAgeButtonWidget(
-                text: 'Age',
-                santext: 28,
-              )),
+                child: WeightAndAgeButtonWidget(
+                  text: 'Жашы',
+                  santext: ageSan,
+                  onPressedRemove: () {
+                    setState(() {});
+                    ageSan--;
+                  },
+                  onPressedAdd: () {
+                    setState(() {});
+                    ageSan++;
+                  },
+                ),
+              ),
             ],
           ),
           const SizedBox(height: 15),
           Expanded(
-            child: Container(
-              margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 25),
-              width: double.infinity,
-              decoration: const BoxDecoration(
-                color: Colors.teal,
-                borderRadius: BorderRadius.all(
-                  Radius.circular(12),
+            child: InkWell(
+              onTap: () {
+                final result = weightSan / pow(100 / height, 2);
+                if (result < 18.5) {
+                  showDialog(
+                    context: context,
+                    builder: (ctx) => AlertDialog(
+                      content: const Text(
+                        'Сенде ашыкча салмак коп экен озуно кара спорт менен машыгып арыкта',
+                        style: TextStyle(fontSize: 30),
+                      ),
+                      actions: <Widget>[
+                        ElevatedButton(
+                          onPressed: () {},
+                          child: const Text('<='),
+                        ),
+                      ],
+                    ),
+                  );
+                } else if (result >= 18.5 && result <= 24.9) {
+                  showDialog(
+                    context: context,
+                    builder: (ctx) => AlertDialog(
+                      content: const Text(
+                        'Сенин салмагын жакшы. Молодец.',
+                        style: TextStyle(fontSize: 30),
+                      ),
+                      actions: <Widget>[
+                        ElevatedButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: const Text('<='),
+                        ),
+                      ],
+                    ),
+                  );
+                } else if (result > 24.9) {
+                  showDialog(
+                    context: context,
+                    builder: (ctx) => AlertDialog(
+                      content: const Text(
+                        'Сенин салмагын аз экен семир жана кобуроок тамак же',
+                        style: TextStyle(fontSize: 30),
+                      ),
+                      actions: <Widget>[
+                        ElevatedButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: const Text('<='),
+                        )
+                      ],
+                    ),
+                  );
+                } else {
+                  showDialog(
+                    context: context,
+                    builder: (ctx) => AlertDialog(
+                      content: const Text(
+                        'Маалымат алууда катачылыктар бар',
+                        style: TextStyle(fontSize: 30),
+                      ),
+                      actions: <Widget>[
+                        ElevatedButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: const Text('<='),
+                        )
+                      ],
+                    ),
+                  );
+                }
+              },
+              child: Container(
+                margin:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 25),
+                width: double.infinity,
+                decoration: const BoxDecoration(
+                  color: Colors.teal,
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(12),
+                  ),
+                ),
+                child: const Center(
+                  child: Text(
+                    'CALCULATE',
+                    style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+                  ),
                 ),
               ),
-              child: Center(
-                  child: Text(
-                'CALCULATER',
-                style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
-              )),
             ),
-          )
+          ),
         ],
       ),
     );
   }
 }
+
+//  if (result < 18.5) {
+//             showMyDialog(
+//               context: context,
+//               text: 'Сенин салмагын аз экен. Кобуроок же',
+//             );
+//           } else if (result >= 18.5 && result <= 24.9) {
+//             AlertDialog(
+//               context: context,
+//               text: 'Сенин салмагын жакшы. Молодец.',
+//             );
+//           } else if (result > 24.9) {
+//             showMyDialog(
+//               context: context,
+//               text: 'Сенде ашыкча салмак коп. Озуно жакшы кара. Спорт менен алектен',
+//             );
+//           } else {
+//             showMyDialog(
+//               context: context,
+//               text: 'Маалымат алууда катачылыктар бар',
+//             );
+//           }
+//         },
