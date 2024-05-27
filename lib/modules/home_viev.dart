@@ -155,18 +155,22 @@ class _HomeVievState extends State<HomeViev> {
           Expanded(
             child: InkWell(
               onTap: () {
-                final result = weightSan / pow(100 / height, 2);
+                // final result = weightSan / pow(100 / height, 2);
+
+                final result = weightSan / pow(height / 100, 2);
                 if (result < 18.5) {
                   showDialog(
                     context: context,
                     builder: (ctx) => AlertDialog(
                       content: const Text(
-                        'Сенде ашыкча салмак коп экен озуно кара спорт менен машыгып арыкта',
+                        'Сенин салмагын аз экен. Кобуроок же',
                         style: TextStyle(fontSize: 30),
                       ),
                       actions: <Widget>[
                         ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
                           child: const Text('<='),
                         ),
                       ],
@@ -195,7 +199,7 @@ class _HomeVievState extends State<HomeViev> {
                     context: context,
                     builder: (ctx) => AlertDialog(
                       content: const Text(
-                        'Сенин салмагын аз экен семир жана кобуроок тамак же',
+                        'Сенде ашыкча салмак коп. Озуно жакшы кара. Спорт менен алектен',
                         style: TextStyle(fontSize: 30),
                       ),
                       actions: <Widget>[

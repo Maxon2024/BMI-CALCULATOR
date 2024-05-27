@@ -1,7 +1,23 @@
 // ignore: file_names
-import 'package:flutter/material.dart' show BuildContext, Card, Color, Column, EdgeInsets, Icon, IconData, MainAxisAlignment, Padding, SizedBox, StatelessWidget, Text, TextStyle, Widget;
+import 'package:flutter/material.dart'
+    show
+        BuildContext,
+        Card,
+        Color,
+        Column,
+        EdgeInsets,
+        Icon,
+        IconData,
+        MainAxisAlignment,
+        Padding,
+        SizedBox,
+        StatelessWidget,
+        Text,
+        TextStyle,
+        Widget;
 // ignore: unused_import
-import "WeightAndAgeWifget.dart";
+import "WeightAndAgeWidget.dart";
+
 class MaleAndFemaleButtonWidget extends StatelessWidget {
   const MaleAndFemaleButtonWidget({
     super.key,
@@ -21,7 +37,8 @@ class MaleAndFemaleButtonWidget extends StatelessWidget {
       child: SizedBox(
         height: 180,
         child: Card(
-          color: color, // Observer(builder: (_) {return Color.fromARGB(255, 62, 151, 196);}),
+          color:
+              color, // Observer(builder: (_) {return Color.fromARGB(255, 62, 151, 196);}),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
